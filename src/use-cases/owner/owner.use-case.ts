@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOwnerDto } from 'src/core/dtos/create-owner.dto';
-import { Owner } from 'src/core/entities/owner';
+import { IOwnerRepository } from 'src/core/interfaces/owner-repository.interface';
 import { OwnerFactoryService } from './owner-factory.service';
 
 @Injectable()
 export class OwnerUseCases {
-  constructor(private ownerFactoryService: OwnerFactoryService) {}
+  constructor(private ownerFactoryService: OwnerFactoryService, private ownerRepository: IOwnerRepository) {}
 
-  createOwner(createOwnerDto: CreateOwnerDto): Owner {
+  async createOwner(createOwnerDto: CreateOwnerDto) {
     const newOwnerEntity =
       this.ownerFactoryService.createNewOwner(createOwnerDto);
-    return newOwnerEntity;
+    await this.ownerRepository.create(newOwnerEntity);
   }
 }

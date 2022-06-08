@@ -7,7 +7,7 @@ export class OwnerController {
   constructor(private ownerUseCases: OwnerUseCases) {}
 
   @Post()
-  createOwner(@Body() createOwnerDto: CreateOwnerDto) {
-    return this.ownerUseCases.createOwner(createOwnerDto);
+  async createOwner(@Body() createOwnerDto: CreateOwnerDto) {
+    return await this.ownerUseCases.createOwner(createOwnerDto);
   }
 }
